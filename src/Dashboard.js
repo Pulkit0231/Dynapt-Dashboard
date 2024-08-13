@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 import './Dashboard.css'
 
@@ -20,7 +20,7 @@ function Dashboard() {
                     headers: {
                         'Accept': '*/*',
                         'Accept-Language': 'en-US,en;q=0.9,en-GB;q=0.8',
-                        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZUlkIjoicHRwIiwibmFtZSI6InB0cCIsInJvbGVzIjp7Il9pZCI6IjY2MmM4NTU4ZjE2MzQzODBlNWE4ZDE3MiIsIk5hbWUiOiJTdXBlciBBZG1pbiIsIklzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTI3VDA0OjU1OjUyLjcwNloiLCJ1cGRhdGVkQXQiOiIyMDI0LTA1LTIwVDA2OjA3OjA0LjAwN1oiLCJfX3YiOjB9LCJ1c2VySWQiOiI2NjRiMGRlNTMxZjc4MDdlZGY3NWZjMjMiLCJGaW5hbmNpYWxZZWFyIjoiMjAyNC0yMDI1IiwiZGF0ZVRpbWUiOiIyMDI0LTA4LTEyVDA0OjM1OjA0LjY3OFoiLCJpYXQiOjE3MjM0MzczMDQsImV4cCI6MTcyMzQ4MDUwNH0.1GXR4tzB5dUb1I9qmpXL_2ifjvXLn5-mz2qMgFQf8UQ',
+                        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZUlkIjoicHRwIiwibmFtZSI6InB0cCIsInJvbGVzIjp7Il9pZCI6IjY2MmM4NTU4ZjE2MzQzODBlNWE4ZDE3MiIsIk5hbWUiOiJTdXBlciBBZG1pbiIsIklzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTI3VDA0OjU1OjUyLjcwNloiLCJ1cGRhdGVkQXQiOiIyMDI0LTA1LTIwVDA2OjA3OjA0LjAwN1oiLCJfX3YiOjB9LCJ1c2VySWQiOiI2NjRiMGRlNTMxZjc4MDdlZGY3NWZjMjMiLCJGaW5hbmNpYWxZZWFyIjoiMjAyNC0yMDI1IiwiZGF0ZVRpbWUiOiIyMDI0LTA4LTEzVDA3OjA3OjMwLjg3MVoiLCJpYXQiOjE3MjM1MzI4NTAsImV4cCI6MTcyMzU3NjA1MH0.wDhSg-B5xT1ESWYtrMM8EdZRaNWHlVS1tm9J1z9AIk8',
                         'Connection': 'keep-alive',
                         'Content-Type': 'application/json',
                     },
@@ -94,6 +94,21 @@ function Dashboard() {
             borderColor: `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 1)`,
             borderWidth: 1,
         }))
+    };
+
+    //  Data for the pie chart (total count by region)
+    const pieChartData = {
+        labels: regions,
+        datasets: [
+            {
+                data: regions.map(region =>
+                    filteredRemarks.reduce((sum, remark) => sum + (summary[remark]?.[region] || 0), 0)
+                ),
+                backgroundColor: regions.map((_, index) => `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 0.5)`),
+                borderColor: regions.map((_, index) => `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 1)`),
+                borderWidth: 1,
+            }
+        ]
     };
 
 
@@ -179,10 +194,17 @@ function Dashboard() {
                     </table>
                 </div>
             </div>
-            <div className='barChat'>
-                <h1>Bar Chart</h1>
-                <Bar data={chartData} />
+            <div className='chart'>
+                <div className='barChart'>
+                    <h1>Bar Chart</h1>
+                    <Bar data={chartData} />
+                </div>
+                <div className='pieChart'>
+                    <h1>Pie Chart</h1>
+                    <Pie data={pieChartData} />
+                </div>
             </div>
+
 
         </div>
 

@@ -51,7 +51,17 @@ ul {
     padding: 70px 60px 0 60px;
 }
 
-.barChat {
-    padding: 50px 40px 40px 40px;
+.chart {
+    display: flex;
+    flex-direction: row;
+}
 
+.barChart {
+    padding: 50px 40px 40px 40px;
+    width: 50%;
+
+}
+
+.pieChart {
+    padding: 50px 40px 40px 100px;
 }
